@@ -1,543 +1,527 @@
 /* =============================================================================
-   BRAND DESIGN SYSTEM
-   Based on Brand Guideline Essentials (2025)
-   Use this file in Looker, embedded HTML, or any web dashboard.
+   INTERSECT BRAND DESIGN SYSTEM — v2
+   Contemporary rewrite based on Brand Guideline Essentials
+   Primary: Dark navy + teal + Energy yellow. Not gray. Not safe.
    ============================================================================= */
 
 
 /* =============================================================================
-   1. DESIGN TOKENS — change once, applies everywhere
+   1. DESIGN TOKENS
    ============================================================================= */
 
 :root {
-  /* --- Core Brand Colors --- */
-  --color-energy:       #FFF700;   /* "Energy" — primary brand yellow, use for highlights */
-  --color-energy-dark:  #E5B400;   /* Dark variant of Energy, for contrast on light bg */
+  /* --- Core Brand --- */
+  --color-energy:        #FFF700;   /* Energy yellow — key highlights only */
+  --color-energy-dark:   #E5B400;   /* Dark Energy — hover states */
 
-  /* --- Steel Scale (Neutral/Supporting) --- */
-  --color-white:        #FFFFFF;
-  --color-steel-100:    #E5E5E5;   /* Lightest steel — backgrounds, zebra rows */
-  --color-steel-400:    #909090;   /* Mid steel — secondary text, borders */
-  --color-steel-600:    #707070;   /* Body text on light backgrounds */
-  --color-steel-700:    #4D4D4D;   /* Column headers, subheadings */
-  --color-steel-900:    #2A2A2A;   /* Near-black — primary heading text */
+  /* --- Dark Scale (primary backgrounds) --- */
+  --color-midnight:      #000A1A;   /* Darkest navy — primary header bg */
+  --color-navy:          #004052;   /* Deep teal-navy — secondary headers */
+  --color-teal:          #009291;   /* Teal — accents, active states */
 
-  /* --- Secondary / Data Viz Palette (for series in charts) --- */
-  --color-teal:         #009291;   /* Series 1 */
-  --color-navy:         #004052;   /* Series 2 */
-  --color-midnight:     #000A1A;   /* Series 3 */
-  --color-berry:        #892055;   /* Series 4 */
-  --color-plum:         #400040;   /* Series 5 */
-  --color-sky:          #4D97FF;   /* Series 6 */
+  /* --- Steel Scale (neutrals) --- */
+  --color-steel-100:     #F2F2F2;   /* Page background */
+  --color-steel-200:     #E5E5E5;   /* Zebra rows, borders */
+  --color-steel-400:     #909090;   /* Muted text, secondary borders */
+  --color-steel-600:     #707070;   /* Secondary text */
+  --color-steel-800:     #4D4D4D;   /* Body text */
+  --color-steel-900:     #2A2A2A;   /* Near-black text */
+  --color-white:         #FFFFFF;
 
-  /* --- Utility / Positive-Negative Indicators --- */
-  --color-positive:     #00A300;
-  --color-negative:     #D10000;
-  --color-neutral:      #909090;
+  /* --- Accent --- */
+  --color-berry:         #892055;   /* Berry — category/section callouts */
+  --color-plum:          #400040;   /* Deep plum — tertiary */
+  --color-sky:           #4D97FF;   /* Sky blue — links, indicators */
+
+  /* --- Positive / Negative --- */
+  --color-positive:      #00A300;
+  --color-negative:      #D10000;
 
   /* --- Typography --- */
-  --font-primary:       'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --font-data:          'Roboto', Arial, sans-serif;   /* charts, numbers */
-
-  --font-size-xs:       11px;
-  --font-size-sm:       12px;
-  --font-size-base:     13px;
-  --font-size-md:       14px;
-  --font-size-lg:       16px;
-  --font-size-xl:       20px;
-  --font-size-2xl:      24px;
-
-  --font-weight-normal: 400;
-  --font-weight-bold:   700;
+  --font-primary:        'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-data:           'Roboto Mono', 'Courier New', monospace;
 
   /* --- Spacing --- */
-  --space-xs:  4px;
-  --space-sm:  8px;
-  --space-md:  12px;
-  --space-lg:  16px;
-  --space-xl:  24px;
-  --space-2xl: 32px;
+  --space-xs:   3px;
+  --space-sm:   6px;
+  --space-md:   10px;
+  --space-lg:   16px;
+  --space-xl:   24px;
 
-  /* --- Borders & Radius --- */
-  --border-light:   1px solid var(--color-steel-100);
-  --border-mid:     1px solid var(--color-steel-400);
-  --border-radius:  2px;   /*  brand is clean/angular — keep radius tight */
-
-  /* --- Shadows --- */
-  --shadow-card:  0 1px 4px rgba(42, 42, 42, 0.10);
-  --shadow-focus: 0 0 0 2px var(--color-energy);
+  /* --- Table cell padding --- */
+  --cell-pad-v: 7px;
+  --cell-pad-h: 14px;
 }
 
 
 /* =============================================================================
-   2. BASE RESET (scoped — safe to import alongside existing styles)
+   2. PIVOT / DATA TABLE  — the main target
    ============================================================================= */
 
-.  -dashboard *,
-.  -dashboard *::before,
-.  -dashboard *::after {
-  box-sizing: border-box;
+.intersect-table-wrap {
+  overflow-x: auto;
+  width: 100%;
+  border-radius: 0;
 }
 
-.  -dashboard {
+.intersect-table {
+  width: 100%;
+  border-collapse: collapse;
   font-family: var(--font-primary);
-  font-size: var(--font-size-base);
+  font-size: 12px;
   color: var(--color-steel-900);
-  background-color: var(--color-white);
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
+  background: var(--color-white);
+}
+
+/* ── Top pivot header (technology names: Solar, Wind, Gas…) ── */
+.intersect-table thead tr:first-child th {
+  background-color: var(--color-midnight);
+  color: var(--color-white);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: var(--cell-pad-v) var(--cell-pad-h);
+  text-align: center;
+  border-right: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 2px solid var(--color-energy);
+  white-space: nowrap;
+}
+
+.intersect-table thead tr:first-child th:first-child {
+  background-color: var(--color-midnight);
+  text-align: left;
+}
+
+/* ── Sub-header row ("Value") ── */
+.intersect-table thead tr:nth-child(2) th {
+  background-color: var(--color-navy);
+  color: rgba(255,255,255,0.65);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 4px var(--cell-pad-h);
+  text-align: right;
+  border-right: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+
+.intersect-table thead tr:nth-child(2) th:first-child {
+  text-align: left;
+}
+
+/* ── Body rows ── */
+.intersect-table tbody tr {
+  border-bottom: 1px solid var(--color-steel-200);
+  transition: background 0.08s ease;
+}
+
+.intersect-table tbody tr:nth-child(even) {
+  background-color: #F7F8FA;
+}
+
+.intersect-table tbody tr:hover {
+  background-color: rgba(0, 64, 82, 0.06);
+}
+
+/* ── Body cells ── */
+.intersect-table tbody td {
+  padding: var(--cell-pad-v) var(--cell-pad-h);
+  text-align: right;
+  color: var(--color-steel-900);
+  font-size: 12px;
+  white-space: nowrap;
+  border-right: 1px solid var(--color-steel-200);
+}
+
+.intersect-table tbody td:last-child {
+  border-right: none;
+}
+
+/* ── Row label (first column: Category, Parameter) ── */
+.intersect-table tbody td:first-child {
+  text-align: left;
+  font-weight: 500;
+  color: var(--color-steel-800);
+  border-right: 2px solid var(--color-steel-200);
+  background-color: inherit;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+}
+
+/* ── Hierarchy indentation ── */
+.intersect-table tbody td.level-1 { padding-left: var(--space-lg); }
+.intersect-table tbody td.level-2 { padding-left: var(--space-xl); font-weight: 400; color: var(--color-steel-600); }
+
+/* ── Subtotal rows (e.g. Equipment total) ── */
+.intersect-table tbody tr.row-subtotal {
+  background-color: var(--color-navy) !important;
+  border-bottom: none;
+}
+
+.intersect-table tbody tr.row-subtotal td {
+  color: var(--color-white);
+  font-weight: 600;
+  font-size: 11.5px;
+  letter-spacing: 0.01em;
+  border-right-color: rgba(255,255,255,0.08);
+}
+
+.intersect-table tbody tr.row-subtotal td:first-child {
+  color: var(--color-energy);
+  border-right-color: rgba(255,255,255,0.15);
+}
+
+/* ── Total row ── */
+.intersect-table tbody tr.row-total {
+  background-color: var(--color-midnight) !important;
+  border-top: 2px solid var(--color-energy);
+}
+
+.intersect-table tbody tr.row-total td {
+  color: var(--color-white);
+  font-weight: 700;
+  font-size: 12px;
+  border-right-color: rgba(255,255,255,0.08);
+}
+
+.intersect-table tbody tr.row-total td:first-child {
+  color: var(--color-energy);
+}
+
+/* ── Section divider rows (e.g. "EPC" group header) ── */
+.intersect-table tbody tr.row-section-header td {
+  background-color: var(--color-teal);
+  color: var(--color-white);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  padding: 4px var(--cell-pad-h);
+  border-right-color: rgba(255,255,255,0.12);
 }
 
 
 /* =============================================================================
-   3. DASHBOARD LAYOUT
+   3. VALUE INDICATORS
    ============================================================================= */
 
-/* Page / Container */
-.  -page {
+.val-positive { color: var(--color-positive); font-weight: 600; }
+.val-negative { color: var(--color-negative); font-weight: 600; }
+.val-neutral  { color: var(--color-steel-400); }
+.val-zero     { color: var(--color-steel-400); font-style: italic; }
+
+/* Pill badges */
+.badge {
+  display: inline-block;
+  border-radius: 2px;
+  padding: 1px 7px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.badge--positive { background: var(--color-positive); color: var(--color-white); }
+.badge--negative { background: var(--color-negative); color: var(--color-white); }
+.badge--energy   { background: var(--color-energy);   color: var(--color-midnight); }
+.badge--teal     { background: var(--color-teal);     color: var(--color-white); }
+.badge--navy     { background: var(--color-navy);     color: var(--color-white); }
+
+
+/* =============================================================================
+   4. DASHBOARD PAGE & CARDS
+   ============================================================================= */
+
+.intersect-page {
   background-color: var(--color-steel-100);
   min-height: 100vh;
   padding: var(--space-xl);
 }
 
-/* Dashboard header bar */
-.  -header {
+/* Dashboard header */
+.intersect-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-md) var(--space-xl);
-  background-color: var(--color-steel-900);
-  color: var(--color-white);
+  padding: var(--space-lg) var(--space-xl);
+  background-color: var(--color-midnight);
   margin-bottom: var(--space-xl);
+  border-bottom: 3px solid var(--color-energy);
 }
 
-.  -header__title {
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: 0.02em;
+.intersect-header__title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-white);
+  letter-spacing: 0.01em;
   margin: 0;
 }
 
-.  -header__meta {
-  font-size: var(--font-size-sm);
+.intersect-header__meta {
+  font-size: 11px;
   color: var(--color-steel-400);
-}
-
-/* Section label above a group of tiles */
-.  -section-label {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-bold);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--color-steel-600);
-  margin: 0 0 var(--space-sm) 0;
-}
-
-/* Card / Tile */
-.  -card {
-  background-color: var(--color-white);
-  border: var(--border-light);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-card);
-  padding: var(--space-lg) var(--space-xl);
-  margin-bottom: var(--space-lg);
-}
-
-.  -card__title {
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-steel-900);
-  margin: 0 0 var(--space-md) 0;
-  padding-bottom: var(--space-sm);
-  border-bottom: 2px solid var(--color-energy);
-  display: inline-block;
-}
-
-
-/* =============================================================================
-   4. PIVOT / DATA TABLES
-   ============================================================================= */
-
-.  -table-wrap {
-  overflow-x: auto;
-  width: 100%;
-}
-
-.  -table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: var(--font-data);
-  font-size: var(--font-size-sm);
-  color: var(--color-steel-900);
-}
-
-/* Column Headers */
-.  -table thead th {
-  background-color: var(--color-steel-900);
-  color: var(--color-white);
-  font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: var(--space-sm) var(--space-md);
-  text-align: right;
-  border-bottom: 2px solid var(--color-energy);
-  white-space: nowrap;
-}
-
-.  -table thead th:first-child,
-.  -table thead th.col-label {
-  text-align: left;
-}
-
-/* Sub-header row (e.g. grouping label inside thead) */
-.  -table thead tr.subheader th {
-  background-color: var(--color-steel-700);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-normal);
-  letter-spacing: 0.03em;
-  text-transform: none;
-  border-bottom: var(--border-light);
-}
-
-/* Body rows */
-.  -table tbody tr {
-  border-bottom: var(--border-light);
-  transition: background-color 0.1s ease;
-}
-
-/* Zebra striping */
-.  -table tbody tr:nth-child(even) {
-  background-color: var(--color-steel-100);
-}
-
-.  -table tbody tr:hover {
-  background-color: rgba(255, 247, 0, 0.12);  /* Energy yellow, very light */
-  cursor: default;
-}
-
-/* Body cells */
-.  -table tbody td {
-  padding: var(--space-xs) var(--space-md);
-  text-align: right;
-  color: var(--color-steel-900);
-  vertical-align: middle;
-  white-space: nowrap;
-}
-
-.  -table tbody td:first-child,
-.  -table tbody td.col-label {
-  text-align: left;
-  font-weight: var(--font-weight-bold);
-  color: var(--color-steel-700);
-}
-
-/* Row label indentation for pivot hierarchy */
-.  -table tbody td.col-label--level-1 { padding-left: var(--space-lg); }
-.  -table tbody td.col-label--level-2 { padding-left: var(--space-xl); font-weight: var(--font-weight-normal); }
-.  -table tbody td.col-label--level-3 { padding-left: var(--space-2xl); font-weight: var(--font-weight-normal); color: var(--color-steel-600); }
-
-/* Total / Summary rows */
-.  -table tbody tr.row-total {
-  background-color: var(--color-steel-900) !important;
-  color: var(--color-white);
-  font-weight: var(--font-weight-bold);
-  border-top: 2px solid var(--color-energy);
-}
-
-.  -table tbody tr.row-total td {
-  color: var(--color-white);
-}
-
-.  -table tbody tr.row-total td:first-child {
-  color: var(--color-energy);
-  font-weight: var(--font-weight-bold);
-}
-
-/* Subtotal rows */
-.  -table tbody tr.row-subtotal {
-  background-color: var(--color-steel-700) !important;
-  color: var(--color-white);
-  font-weight: var(--font-weight-bold);
-}
-
-.  -table tbody tr.row-subtotal td {
-  color: var(--color-white);
-}
-
-/* Footer */
-.  -table tfoot td {
-  padding: var(--space-sm) var(--space-md);
-  font-size: var(--font-size-xs);
-  color: var(--color-steel-400);
-  border-top: var(--border-mid);
-  text-align: right;
-}
-
-.  -table tfoot td:first-child { text-align: left; }
-
-
-/* =============================================================================
-   5. VALUE INDICATORS (positive / negative / neutral)
-   ============================================================================= */
-
-/* Apply directly to <td> or to a <span> inside one */
-.val-positive {
-  color: var(--color-positive);
-  font-weight: var(--font-weight-bold);
-}
-
-.val-negative {
-  color: var(--color-negative);
-  font-weight: var(--font-weight-bold);
-}
-
-.val-neutral {
-  color: var(--color-neutral);
-}
-
-/* Filled pill badges (use sparingly — KPI callouts) */
-.badge {
-  display: inline-block;
-  border-radius: 2px;
-  padding: 1px 6px;
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-bold);
   letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
-.badge--positive { background-color: var(--color-positive); color: var(--color-white); }
-.badge--negative { background-color: var(--color-negative); color: var(--color-white); }
-.badge--neutral  { background-color: var(--color-steel-400); color: var(--color-white); }
-.badge--energy   { background-color: var(--color-energy); color: var(--color-steel-900); }
+/* Card */
+.intersect-card {
+  background: var(--color-white);
+  border: none;
+  border-top: 3px solid var(--color-navy);
+  box-shadow: 0 1px 3px rgba(0,10,26,0.08), 0 4px 12px rgba(0,10,26,0.04);
+  margin-bottom: var(--space-lg);
+  overflow: hidden;
+}
+
+.intersect-card--energy { border-top-color: var(--color-energy); }
+.intersect-card--teal   { border-top-color: var(--color-teal); }
+.intersect-card--berry  { border-top-color: var(--color-berry); }
+
+.intersect-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  background-color: var(--color-midnight);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.intersect-card__title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-white);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.intersect-card__body {
+  padding: 0;
+}
 
 
 /* =============================================================================
-   6. KPI / STAT TILES
+   5. KPI TILES
    ============================================================================= */
 
 .kpi-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: var(--space-md);
   margin-bottom: var(--space-xl);
 }
 
 .kpi-tile {
-  background-color: var(--color-white);
-  border: var(--border-light);
-  border-top: 3px solid var(--color-steel-400);
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-card);
+  background: var(--color-white);
+  border-left: 4px solid var(--color-navy);
+  box-shadow: 0 1px 3px rgba(0,10,26,0.08);
   padding: var(--space-md) var(--space-lg);
 }
 
-.kpi-tile--energy  { border-top-color: var(--color-energy); }
-.kpi-tile--teal    { border-top-color: var(--color-teal); }
-.kpi-tile--positive{ border-top-color: var(--color-positive); }
-.kpi-tile--negative{ border-top-color: var(--color-negative); }
+.kpi-tile--energy  { border-left-color: var(--color-energy); }
+.kpi-tile--teal    { border-left-color: var(--color-teal); }
+.kpi-tile--berry   { border-left-color: var(--color-berry); }
+.kpi-tile--positive{ border-left-color: var(--color-positive); }
+.kpi-tile--negative{ border-left-color: var(--color-negative); }
 
 .kpi-tile__label {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-bold);
+  font-size: 10px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: var(--color-steel-600);
+  letter-spacing: 0.09em;
+  color: var(--color-steel-400);
   margin-bottom: var(--space-xs);
 }
 
 .kpi-tile__value {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-steel-900);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--color-midnight);
   line-height: 1.1;
-  font-family: var(--font-data);
+  letter-spacing: -0.01em;
 }
 
 .kpi-tile__sub {
-  font-size: var(--font-size-xs);
+  font-size: 10px;
   color: var(--color-steel-400);
   margin-top: var(--space-xs);
 }
 
 
 /* =============================================================================
-   7. FILTER BAR / CONTROLS
+   6. FILTER BAR
    ============================================================================= */
 
-.  -filters {
+.intersect-filters {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-sm);
   align-items: center;
   margin-bottom: var(--space-lg);
   padding: var(--space-sm) var(--space-md);
-  background-color: var(--color-white);
-  border: var(--border-light);
-  border-radius: var(--border-radius);
+  background: var(--color-white);
+  border-left: 3px solid var(--color-teal);
+  box-shadow: 0 1px 3px rgba(0,10,26,0.06);
 }
 
-.  -filters__label {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-bold);
+.intersect-filters__label {
+  font-size: 10px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.07em;
-  color: var(--color-steel-600);
+  letter-spacing: 0.08em;
+  color: var(--color-steel-400);
   white-space: nowrap;
 }
 
-.  -select,
-.  -input {
+.intersect-select,
+.intersect-input {
   font-family: var(--font-primary);
-  font-size: var(--font-size-sm);
+  font-size: 12px;
   color: var(--color-steel-900);
-  background-color: var(--color-white);
-  border: 1px solid var(--color-steel-400);
-  border-radius: var(--border-radius);
+  background: var(--color-white);
+  border: 1px solid var(--color-steel-200);
+  border-radius: 0;
   padding: var(--space-xs) var(--space-sm);
   height: 28px;
   outline: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color 0.12s;
 }
 
-.  -select:focus,
-.  -input:focus {
-  border-color: var(--color-energy-dark);
-  box-shadow: var(--shadow-focus);
+.intersect-select:focus,
+.intersect-input:focus {
+  border-color: var(--color-teal);
+  box-shadow: 0 0 0 2px rgba(0,146,145,0.15);
 }
 
-.  -btn {
+.intersect-btn {
   font-family: var(--font-primary);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-bold);
-  background-color: var(--color-energy);
-  color: var(--color-steel-900);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--color-energy);
+  color: var(--color-midnight);
   border: none;
-  border-radius: var(--border-radius);
+  border-radius: 0;
   padding: var(--space-xs) var(--space-md);
   height: 28px;
   cursor: pointer;
-  letter-spacing: 0.04em;
-  transition: background-color 0.15s ease;
+  transition: background 0.12s;
 }
 
-.  -btn:hover { background-color: var(--color-energy-dark); }
+.intersect-btn:hover { background: var(--color-energy-dark); }
 
-.  -btn--secondary {
-  background-color: var(--color-white);
-  color: var(--color-steel-900);
-  border: 1px solid var(--color-steel-400);
+.intersect-btn--secondary {
+  background: transparent;
+  color: var(--color-steel-800);
+  border: 1px solid var(--color-steel-200);
 }
 
-.  -btn--secondary:hover { background-color: var(--color-steel-100); }
+.intersect-btn--secondary:hover { background: var(--color-steel-100); }
 
 
 /* =============================================================================
-   8. CHART COLOR UTILITY CLASSES
-   Use on SVG rects, Highcharts/D3 series, or Looker color overrides.
-   See brand guideline color formula slides for recommended combination rules.
+   7. CHART SERIES COLORS
+   Brand formula sequences per style guide
    ============================================================================= */
 
-/*
-   BRAND FORMULA (Neutral + Dark + Bright):
-     col-brand-1 (steel-100), col-brand-2 (steel-700), col-brand-3 (energy)
+/* 5-part formula: Neutral + Midnight + Teal + Berry + Energy */
+:root {
+  --series-1: var(--color-teal);      /* #009291 */
+  --series-2: var(--color-midnight);  /* #000A1A */
+  --series-3: var(--color-berry);     /* #892055 */
+  --series-4: var(--color-navy);      /* #004052 */
+  --series-5: var(--color-energy);    /* #FFF700 */
+  --series-6: var(--color-sky);       /* #4D97FF */
+  --series-7: var(--color-plum);      /* #400040 */
+}
 
-   UTILITY FORMULA (Neutral + Positive + Negative):
-     col-util-1 (steel-100), col-util-2 (positive), col-util-3 (negative)
-
-   MULTI-SERIES (up to 6, from secondary palette):
-     col-series-1 through col-series-6
-*/
-
-.col-brand-1  { color: var(--color-steel-100); }
-.col-brand-2  { color: var(--color-steel-700); }
-.col-brand-3  { color: var(--color-energy); }
-
-.col-util-1   { color: var(--color-neutral); }
-.col-util-2   { color: var(--color-positive); }
-.col-util-3   { color: var(--color-negative); }
-
-.col-series-1 { color: var(--color-teal); }
-.col-series-2 { color: var(--color-navy); }
-.col-series-3 { color: var(--color-midnight); }
-.col-series-4 { color: var(--color-berry); }
-.col-series-5 { color: var(--color-plum); }
-.col-series-6 { color: var(--color-sky); }
-
-/* Background equivalents (useful for legend swatches, series fills) */
-.bg-brand-1  { background-color: var(--color-steel-100); }
-.bg-brand-2  { background-color: var(--color-steel-700); }
-.bg-brand-3  { background-color: var(--color-energy); }
-.bg-series-1 { background-color: var(--color-teal); }
-.bg-series-2 { background-color: var(--color-navy); }
-.bg-series-3 { background-color: var(--color-midnight); }
-.bg-series-4 { background-color: var(--color-berry); }
-.bg-series-5 { background-color: var(--color-plum); }
-.bg-series-6 { background-color: var(--color-sky); }
+.bg-series-1 { background-color: var(--series-1); }
+.bg-series-2 { background-color: var(--series-2); }
+.bg-series-3 { background-color: var(--series-3); }
+.bg-series-4 { background-color: var(--series-4); }
+.bg-series-5 { background-color: var(--series-5); }
+.bg-series-6 { background-color: var(--series-6); }
+.bg-series-7 { background-color: var(--series-7); }
 
 
 /* =============================================================================
-   9. LOOKER-SPECIFIC OVERRIDES
-   Paste the block below into your Looker project's custom CSS file.
-   Adjust selectors if your Looker version uses different class names.
+   8. LOOKER CUSTOM CSS OVERRIDES
+   Paste into Looker > Platform > Themes > Custom CSS
    ============================================================================= */
 
 /*
-  -- Looker Table / Pivot overrides --
-
-  .looker-vis-context-title {
-    font-family: var(--font-primary) !important;
-    font-size: var(--font-size-md) !important;
-    font-weight: var(--font-weight-bold) !important;
-    color: var(--color-steel-900) !important;
-  }
-
-  .vis-header-cell {
-    background-color: var(--color-steel-900) !important;
-    color: var(--color-white) !important;
-    font-family: var(--font-primary) !important;
-    font-size: var(--font-size-xs) !important;
-    font-weight: var(--font-weight-bold) !important;
+  -- Pivot table top header (technology columns) --
+  .ag-header-cell, .vis-header-cell {
+    background-color: #000A1A !important;
+    color: #FFFFFF !important;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
     text-transform: uppercase !important;
-    letter-spacing: 0.06em !important;
-    border-bottom: 2px solid var(--color-energy) !important;
+    letter-spacing: 0.08em !important;
+    border-bottom: 2px solid #FFF700 !important;
   }
 
-  .vis-cell {
-    font-family: var(--font-data) !important;
-    font-size: var(--font-size-sm) !important;
-    color: var(--color-steel-900) !important;
-    border-bottom: 1px solid var(--color-steel-100) !important;
+  -- Sub-header row ("Value") --
+  .ag-header-row:nth-child(2) .ag-header-cell {
+    background-color: #004052 !important;
+    color: rgba(255,255,255,0.65) !important;
+    font-size: 10px !important;
+    font-weight: 400 !important;
   }
 
-  .vis-row:nth-child(even) .vis-cell {
-    background-color: var(--color-steel-100) !important;
+  -- Body cells --
+  .vis-cell, .ag-cell {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+    font-size: 12px !important;
+    color: #2A2A2A !important;
+    border-bottom: 1px solid #E5E5E5 !important;
+    border-right: 1px solid #E5E5E5 !important;
   }
 
-  .vis-row:hover .vis-cell {
-    background-color: rgba(255, 247, 0, 0.10) !important;
+  -- Zebra rows --
+  .ag-row-even .ag-cell {
+    background-color: #F7F8FA !important;
   }
 
-  .vis-total-row .vis-cell {
-    background-color: var(--color-steel-900) !important;
-    color: var(--color-white) !important;
-    font-weight: var(--font-weight-bold) !important;
-    border-top: 2px solid var(--color-energy) !important;
+  -- Hover --
+  .ag-row:hover .ag-cell {
+    background-color: rgba(0, 64, 82, 0.06) !important;
+  }
+
+  -- Row label column --
+  .ag-cell:first-child {
+    font-weight: 500 !important;
+    color: #4D4D4D !important;
+    border-right: 2px solid #E5E5E5 !important;
+  }
+
+  -- Total row --
+  .vis-total-row .vis-cell, .ag-row-footer .ag-cell {
+    background-color: #000A1A !important;
+    color: #FFFFFF !important;
+    font-weight: 700 !important;
+    border-top: 2px solid #FFF700 !important;
   }
 */
 
 
 /* =============================================================================
-   10. UTILITY HELPERS
+   9. UTILITIES
    ============================================================================= */
 
-.text-right  { text-align: right !important; }
-.text-left   { text-align: left !important; }
-.text-center { text-align: center !important; }
-
-.text-bold   { font-weight: var(--font-weight-bold) !important; }
-.text-muted  { color: var(--color-steel-400) !important; }
-.text-sm     { font-size: var(--font-size-sm) !important; }
+.text-right   { text-align: right !important; }
+.text-left    { text-align: left !important; }
+.text-center  { text-align: center !important; }
+.text-bold    { font-weight: 700 !important; }
+.text-muted   { color: var(--color-steel-400) !important; }
+.text-energy  { color: var(--color-energy) !important; }
+.text-teal    { color: var(--color-teal) !important; }
+.text-mono    { font-family: var(--font-data) !important; }
 
 .mt-sm  { margin-top: var(--space-sm) !important; }
 .mt-md  { margin-top: var(--space-md) !important; }
@@ -546,8 +530,8 @@
 .mb-md  { margin-bottom: var(--space-md) !important; }
 .mb-lg  { margin-bottom: var(--space-lg) !important; }
 
-.d-flex         { display: flex; }
-.align-center   { align-items: center; }
-.justify-between{ justify-content: space-between; }
-.gap-sm         { gap: var(--space-sm); }
-.gap-md         { gap: var(--space-md); }
+.d-flex          { display: flex; }
+.align-center    { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-sm          { gap: var(--space-sm); }
+.gap-md          { gap: var(--space-md); }
