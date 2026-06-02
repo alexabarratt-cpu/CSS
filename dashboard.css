@@ -8,7 +8,12 @@
 /* =============================================================================
    1. DESIGN TOKENS
    ============================================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
+* {
+  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+  font-style: normal !important;
+}
 :root {
   /* --- Core Brand --- */
   --color-energy:        #FFF700;   /* Energy yellow — key highlights only */
